@@ -11,8 +11,14 @@ ESP8266WebServer server(80);
 const int led = 2;
 
 void handleRoot() {
-  server.send(200, "text/plain", "hello from esp8266!");
+  if ( digitalRead(0) == 1 ){
+    server.send(200, "text/plain", "hello from esp8266!");
+  }
+  else {
+    server.send(200, "text/plain", "hey from esp ^-^");
+  }
   digitalWrite(led, 0);
+  
 }
 
 void handleNotFound(){
@@ -68,3 +74,11 @@ void setup(void){
 void loop(void){
   server.handleClient();
 }
+  
+
+
+
+
+
+
+  
