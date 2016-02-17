@@ -4,8 +4,9 @@
 #include <ESP8266WebServer.h>
 #include <ESP8266mDNS.h>
 #include <stdio.h>
+#include <Wire.h>
 
-//PCF8591 a2d{0, 2};
+PCF8591 a2d;
 const char* ssid = "EdenOfThings";
 const char* password = "edenofthings";
 
@@ -14,8 +15,8 @@ ESP8266WebServer server(80);
 int A2dReading[4];
 
 void handleRoot() {
-  char buffer [16];
-  sprintf(buffer, "%i", A2dReading[2]);
+  char buffer [20];
+  sprintf(buffer, "%i %i %i %i", A2dReading[0], A2dReading[1], A2dReading[2], A2dReading[3]);
   server.send(200, "text/plain", buffer);
 
   
@@ -38,7 +39,8 @@ void handleNotFound(){
 
 }
 void setup(void){
-
+  Wire.begin(2, 0);
+  a2d.InitialiseDevice();
   Serial.begin(115200);
   WiFi.begin(ssid, password);
   Serial.println("");
@@ -53,6 +55,7 @@ void setup(void){
   Serial.println(ssid);
   Serial.print("IP address: ");
   Serial.println(WiFi.localIP());
+
 
   if (MDNS.begin("esp8266")) {
     Serial.println("MDNS responder started");
@@ -70,15 +73,28 @@ void setup(void){
   Serial.println("HTTP server started");
 }
 
+unsigned long UpdateRequest = 0;
+
 void loop(void){
-  PCF8591 a2d{2, 0};
+  
+
+    
   server.handleClient();
+  if(millis() - UpdateRequest > 500)
+  {
   a2d.UpdateReadings();
   A2dReading[0] = a2d.Data(0);
   A2dReading[1] = a2d.Data(1);
   A2dReading[2] = a2d.Data(2);
   A2dReading[3] = a2d.Data(3);
+   UpdateRequest = millis();  
+  }
+ 
+
+   
   
+  
+   
 }
   
 
