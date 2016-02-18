@@ -83,7 +83,7 @@ void loop(void){
   if(millis() - UpdateRequest > 500)
   {
   a2d.UpdateReadings();
-  A2dReading[0] = a2d.Data(0);
+  Serial.println (A2dReading[0] = a2d.Data(0));
   A2dReading[1] = a2d.Data(1);
   A2dReading[2] = a2d.Data(2);
   A2dReading[3] = a2d.Data(3);

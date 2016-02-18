@@ -21,7 +21,7 @@ void loop()
     Serial.print("Twisty knob: ");
     Serial.println(a2d.Data(0));
     Serial.println("");
-    Serial.print("Random Num: ");
+    Serial.print("Temperature: ");
     Serial.println(a2d.Data(3));
     Serial.println("");
     Serial.print("Random num 2: ");
