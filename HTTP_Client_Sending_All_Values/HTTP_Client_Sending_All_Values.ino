@@ -65,36 +65,36 @@ void dataSent (){
     sensors.requestTemperatures();
   }
 
-void SendLightData(){
+void SendData (String url,String payload){
         HTTPClient http;
 
-        http.begin("178.62.121.17", 80, "/api/station/1/light"); //HTTP
-        String payload = "light="+String(a2d.Data(1))+"&sequence="+String(Sequence)+"&live="+live;
+        http.begin("178.62.121.17", 80, url); //HTTP
         int httpCode = http.POST(payload);
+      
+}
+
+void SendLightData(){
+  
+        String payload = "light="+String(a2d.Data(1))+"&sequence="+String(Sequence)+"&live="+live;
+        SendData("/api/station/1/light", payload);
     
 }
 
 void SendTempData(){
-        HTTPClient http;
-
-        http.begin("178.62.121.17", 80, "/api/station/1/temp"); 
+ 
         String payload = "systemtemp="+String(a2d.Data(3))+"&sequence="+String(Sequence)+"&live="+live;
-        int httpCode = http.POST(payload);
+        SendData("/api/station/1/temp", payload);
   
 }
 void SendHumidityData(){
-        HTTPClient http;
-
-        http.begin("178.62.121.17", 80, "/api/station/1/humidity");
+        
         String payload = "Humidity="+String(sensor.Humidity())+"&sequence="+String(Sequence)+"&live="+live;
-        int httpCode = http.POST(payload);
+        SendData("/api/station/1/humidity", payload);
   
 }
 
-void SendWaterTempData(){
-        HTTPClient http;
-        
-        http.begin("178.62.121.17", 80, "/api/station/1/water"); 
+void SendWaterTempData(){    
+       
         String payload = +"&sequence="+String(Sequence)+"live="+live;
         
       for(int i=0;i<numberOfDevices; i++)
@@ -111,8 +111,7 @@ void SendWaterTempData(){
       //else ghost device! Check your power requirements and cabling
       
       }
-        
-        int httpCode = http.POST(payload);
+        SendData("/api/station/1/water", payload);
 
 }
   void loop() {
@@ -126,6 +125,6 @@ void SendWaterTempData(){
         Sequence++;
       }
   
-      delay(1000);
+      delay(5000);
   }
 
