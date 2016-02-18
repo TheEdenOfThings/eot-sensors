@@ -24,7 +24,7 @@ void loop()
     Serial.print("Temperature: ");
     Serial.println(a2d.Data(3));
     Serial.println("");
-    Serial.print("Random num 2: ");
+    Serial.print("Humidity: ");
     Serial.println(a2d.Data(2));
   }
   delay(5000);
