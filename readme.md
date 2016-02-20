@@ -4,7 +4,7 @@ This is the Sensor teams repository from the Eden of Things project that took pl
 
 ## Station Schematic
 
-<img src="" />
+<img src="https://raw.githubusercontent.com/TheEdenOfThings/eot-sensors/master/img/SensorStation_schematic.jpg" />
 
 ## More info
 Check out our website for news and updates on the project.
